@@ -5,10 +5,10 @@ namespace HARDWARE171\Visao;
     public function __construct(){
     }
 
-    public function formulario($id, $formTipo, $dados){
+    public function formulario(){
       $titulo = 'Gerenciamento de Usuários';
       $subtitulo = 'Cadastro de Usuários';
-      $conteudo = '<form action="/HARDWARE171/Usuario/' . $formTipo . '" method="post">
+      $conteudo = '<form action="/HARDWARE171/Usuario/inserir" method="post">
       <label for="nome">ID do Usuario</label>
       <input type="text" name="id" id="id" disabled><br>
       <label for="nome">Nome do Usuario</label>

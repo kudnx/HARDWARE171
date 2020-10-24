@@ -16,7 +16,7 @@ use HARDWARE171\Visao\VisaoUsuario;
 
     public function digitar(){
       $visaoUsuario = new VisaoUsuario();
-      $visaoUsuario->formulario($id="", $formTipo="inserir", $dados="");
+      $visaoUsuario->formulario();
     }
 
     public function inserir(){
