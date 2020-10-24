@@ -1,0 +1,16 @@
+{
+    "name": "zluan/hardware",
+    "description": "Projeto desenvolvido por Heron, Luan e Victor para a mat\u0000ria de Desenvolvimento Web II ministrada pelo professor Rosinei Soares no curso de Sistemas de informa\u0000\u0000o do IFMG-SJE.",
+    "require": {
+        "slim/slim": "3.*"
+    },
+    "autoload": {
+      "psr-4": {"HARDWARE171\\": "./"}
+    },
+    "authors": [
+        {
+            "name": "kudnx",
+            "email": "luanesdras.rangel@gmail.com"
+        }
+    ]
+}
