@@ -87,12 +87,6 @@ use PDOException;
     }
 
     public function delete($id){
-      echo "<script>
-        var r=confirm('Você realmente deseja excluir esse usuário?');
-          if (r==false){
-            window.location.href = 'http://localhost/HARDWARE171/Usuario/ver';
-          }
-       </script>";
        $user = 'root';
        $pass = '';
        try {
