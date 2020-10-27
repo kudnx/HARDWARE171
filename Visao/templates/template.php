@@ -72,7 +72,9 @@
       <h2><?php echo $subtitulo; ?></h2>
     </section>
     <article class="">
-      <?php echo $conteudo; ?>
+      <?php
+       echo $conteudo;
+      ?>
     </article>
 
     <footer>

@@ -31,9 +31,9 @@ namespace HARDWARE171\Visao;
         $parcial .= '<h3>' . $usuario['nome'] . '</h3>' . $usuario['email'] .
         ', ' . $usuario['cidade'];
         $id = $usuario['id'];
-        $parcial .= '<p><br>
-        <a href="digitar/'. $id .'"><button>Editar</button></a>
-        <button>Excluir</button>';
+        $parcial .= '<p><br>';
+        $parcial .= '<a href="digitar/'. $id .'"><button>Editar</button></a>';
+        $parcial .= '<a href="excluir/' . $id .'"><button>Excluir</button></a>';
         $conteudo .= $parcial;
       }
       include './Visao/templates/template.php';
@@ -47,3 +47,9 @@ namespace HARDWARE171\Visao;
     }
   }
  ?>
+
+ <script>
+  public function excluir(){
+    alert('usuario');
+  }
+ </script>

@@ -86,8 +86,29 @@ use PDOException;
       }
     }
 
-    public function delete(){
-
+    public function delete($id){
+      echo "<script>
+        var r=confirm('Você realmente deseja excluir esse usuário?');
+          if (r==false){
+            window.location.href = 'http://localhost/HARDWARE171/Usuario/ver';
+          }
+       </script>";
+       $user = 'root';
+       $pass = '';
+       try {
+         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
+         $sql = 'DELETE FROM `usuario` WHERE id = ' . $id . ';';
+         if ($data = $con->query($sql)) {
+           echo "<script>
+                  alert('Usuário excluido com sucesso!!');
+                 window.location.href = 'http://localhost/HARDWARE171/Usuario/ver'
+                 </script>";
+         }else{
+           return array('status' => 'erro');
+         }
+       }catch(PDOException $pdoex){
+         return array('status' => 'erro');
+       }
     }
   }
  ?>

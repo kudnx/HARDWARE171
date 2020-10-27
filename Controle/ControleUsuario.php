@@ -19,6 +19,16 @@ use HARDWARE171\Visao\VisaoUsuario;
       $visaoUsuario->formulario();
     }
 
+    public function excluir(){
+      $id = $_SERVER['REQUEST_URI'];
+      $id = str_replace("/", "", $id);
+      $id = str_replace("HARDWARE171", "", $id);
+      $id = str_replace("Usuario", "", $id);
+      $id = str_replace("excluir", "", $id);
+      $modeloUsuario = new Usuario($id);
+      $modeloUsuario->delete($id);
+    }
+
     public function inserir(){
       $nome = filter_input(INPUT_POST, 'nome');
       $email = filter_input(INPUT_POST, 'email');
