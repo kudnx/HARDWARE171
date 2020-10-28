@@ -70,12 +70,51 @@ use PDOException;
       }
     }
 
+    public function update($id){
+      $user = 'root';
+      $pass = '';
+      try {
+        $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
+        $sql = 'update usuario set nome = ?, email = ?, cidade = ? where id= ' . $id .';';
+        $pre = $con->prepare($sql);
+        $pre->bindValue(1, $this->nome);
+        $pre->bindValue(2, $this->email);
+        $pre->bindValue(3, $this->cidade);
+        if ($pre->execute()){
+          return array('status' => 'sucesso');
+        }else{
+          var_dump($con->errorInfo());
+          var_dump($pre->errorInfo());
+          return array('status' => 'erro');
+        }
+      }catch(PDOException $pdoex){
+        var_dump($pdoex);
+        return array('status' => 'erro');
+      }
+    }
+
     public function recover(){
       $user = 'root';
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
         $sql = 'select id, nome, email, cidade from usuario order by nome asc;';
+        if ($data = $con->query($sql)) {
+          return $data->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+          return array('status' => 'erro');
+        }
+      }catch(PDOException $pdoex){
+        return array('status' => 'erro');
+      }
+    }
+
+    public function recoverUm($id){
+      $user = 'root';
+      $pass = '';
+      try {
+        $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
+        $sql = 'select * from usuario where id =' . $id . ';';
         if ($data = $con->query($sql)) {
           return $data->fetchAll(PDO::FETCH_ASSOC);
         }else{
