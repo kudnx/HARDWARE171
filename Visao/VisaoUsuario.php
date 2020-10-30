@@ -23,16 +23,14 @@ namespace HARDWARE171\Visao;
     public function formularioEdicao($dados){
       $titulo = 'Gerenciamento de Usuários';
       $subtitulo = 'Edição de Usuários';
-      $nome = str_replace(" ", "_", $dados[0]['nome']);
-      $cidade = str_replace(" ", "_", $dados[0]['cidade']);
       $conteudo = '<form action="/HARDWARE171/Usuario/atualizar" method="post">
-      <input type="text" name="id" id="id" value=' . $dados[0]['id'] .' hidden><br>
+      <input type="text" name="id" id="id" value="' . $dados[0]['id'] .'" hidden><br>
       <label for="nome">Nome do Usuario</label>
-      <input type="text" name="nome" id="nome" value=' . $nome .'><br>
+      <input type="text" name="nome" id="nome" value="' . $dados[0]['nome'] .'"><br>
       <label for="nome">Email do Usuário</label>
-      <input type="email" name="email" id="email" value=' . $dados[0]['email'] .'><br>
+      <input type="email" name="email" id="email" value="' . $dados[0]['email'] .'"><br>
       <label for="nome">Cidade do Usuário</label>
-      <input type="text" name="cidade" id="cidade" value=' . $cidade .'><br>
+      <input type="text" name="cidade" id="cidade" value="' . $dados[0]['cidade'] .'"><br>
       <button>Atualizar</button>
       </form>';
       include './Visao/templates/template.php';

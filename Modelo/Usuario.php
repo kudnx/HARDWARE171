@@ -77,11 +77,9 @@ use PDOException;
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
         $sql = 'update usuario set nome = ?, email = ?, cidade = ? where id= ' . $id .';';
         $pre = $con->prepare($sql);
-        $nome = str_replace("_", " ", $this->nome);
-        $cidade = str_replace("_", " ", $this->cidade);
-        $pre->bindValue(1, $nome);
+        $pre->bindValue(1, $this->nome);
         $pre->bindValue(2, $this->email);
-        $pre->bindValue(3, $cidade);
+        $pre->bindValue(3, $this->cidade);
         if ($pre->execute()){
           return array('status' => 'sucesso');
         }else{

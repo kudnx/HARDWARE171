@@ -98,8 +98,7 @@
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
         $sql = 'update fornecedor set nome = ?, logo = ? where id= ' . $id .';';
         $pre = $con->prepare($sql);
-        $nome = str_replace("_", " ", $this->nome);
-        $pre->bindValue(1, $nome);
+        $pre->bindValue(1, $this->nome);
         $pre->bindValue(2, $this->logo);
         if ($pre->execute()){
           return array('status' => 'sucesso');

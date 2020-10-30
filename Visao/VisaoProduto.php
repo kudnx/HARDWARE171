@@ -36,18 +36,17 @@
       $dir = './Imagens/Produto/';
       $titulo = 'Gerenciamento de Produtos';
       $subtitulo = 'Edição de Produtos';
-      unlink($dir.$produto['foto']);
       $conteudo = '<form action="/HARDWARE171/Produto/atualizar" method="post" enctype="multipart/form-data">
-      <input type="text" name="id" id="id" value=' . $produto['produto_id'] .' hidden>
+      <input type="text" name="id" id="id" value="' . $produto['produto_id'] .'" hidden>
       <input type="text" name="fornecedor_id" id="fornecedor_id" value=' . $produto['fornecedor_id'] .' hidden>
       <label for="nome">Nome do Produto</label>
-      <input type="text" name="nome" id="nome" value=' . $produto['produto_nome'] .'><br>
+      <input type="text" name="nome" id="nome" value="' . $produto['produto_nome'] .'"><br>
       <label for="preco">Preço do Produto</label>
-      <input type="number" name="preco" id="preco" value=' . $produto['preco'] . '><br>
+      <input type="number" name="preco" id="preco" value="' . $produto['preco'] . '"><br>
       <label for="descricao">Descricao do Produto</label>
-      <input type="text" name="descricao" id="descricao" value=' . $produto['descricao'] . '><br>
+      <input type="text" name="descricao" id="descricao" value="' . $produto['descricao'] . '"><br>
       <label for="foto">Foto</label>
-      <input id="foto" type="file" name="foto" value=' . $produto['foto'] . ' accept="image/*"></input><br>
+      <input id="foto" type="file" name="foto" value="' . $produto['foto'] . '" accept="image/*"></input><br>
       <button>Atualizar</button>
       </form>';
       include './Visao/templates/template.php';

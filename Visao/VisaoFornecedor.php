@@ -20,17 +20,14 @@ namespace HARDWARE171\Visao;
 
     public function formularioEdicao($dados){
       $dir = './Imagens/Fornecedor/';
-      $nome = $dados['nome'];
-      $nome = str_replace(" ", "_", $nome);
-      unlink($dir.$dados['logo']);
       $titulo = 'Gerenciamento de Fornecedores';
       $subtitulo = 'Edição de Fornecedores';
       $conteudo = '<form action="/HARDWARE171/Fornecedor/atualizar" method="post" enctype="multipart/form-data">
-      <input type="text" name="id" id="id" value=' . $dados['id'] .' hidden><br>
+      <input type="text" name="id" id="id" value="' . $dados['id'] .'" hidden><br>
       <label for="nome">Nome do Fornecedor</label>
-      <input type="text" name="nome" id="nome" value=' . $nome .'><br>
+      <input type="text" name="nome" id="nome" value="' . $dados['nome'] .'"><br>
       <label for="nome">Imagem do Fornecedor</label>
-      <input type="file" name="logo" id="logo" value=' . $dados['logo'] .' accept="image/*"><br>
+      <input type="file" name="logo" id="logo" value="' . $dados['logo'] .'" accept="image/*"><br>
       <button>Atualizar</button>
       </form>';
       include './Visao/templates/template.php';
