@@ -51,6 +51,23 @@
         text-decoration: none;
         color: inherit;
       }
+
+      header{
+        text-align: center;
+      }
+
+      section{
+        text-align: center;
+      }
+
+      article{
+        text-align: center;
+      }
+
+      footer{
+        text-align: center;
+      }
+
     </style>
     <title><?php echo $titulo ?></title>
   </head>
@@ -62,6 +79,21 @@
           <ul>
             <li><a href="/HARDWARE171/Usuario/ver">Ver</a></li>
             <li><a href="/HARDWARE171/Usuario/digitar">Digitar</a></li>
+          </ul>
+        </li>
+        <li>
+          Fornecedores
+          <ul>
+            <li><a href="/HARDWARE171/Fornecedor/ver">Ver</a></li>
+            <li><a href="/HARDWARE171/Fornecedor/digitar">Digitar</a></li>
+          </ul>
+        </li>
+        <li>
+          Produtos
+          <ul>
+            <li><a href="/HARDWARE171/Produto/ver">Ver</a></li>
+            <li><a href="/HARDWARE171/Produto/digitar">Digitar</a></li>
+          </ul>
         </li>
       </ul>
     </nav>

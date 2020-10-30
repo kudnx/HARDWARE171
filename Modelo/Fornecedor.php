@@ -1,18 +1,16 @@
 <?php
-namespace HARDWARE171\Modelo;
+  namespace HARDWARE171\Modelo;
 
-use PDO;
-use PDOException;
+  use PDO;
+  use PDOException;
 
-  class Usuario
+  class Fornecedor
   {
     private $id;
     private $nome;
-    private $email;
-    private $cidade;
+    private $logo;
 
     public function __construct($id = null) {
-      $this->id = $id;
     }
 
     public function getId(){
@@ -31,20 +29,12 @@ use PDOException;
       $this->nome = $nome;
     }
 
-    public function getEmail(){
-      return $this->email;
+    public function getImagem(){
+      return $this->logo;
     }
 
-    public function setEmail($email){
-      $this->email = $email;
-    }
-
-    public function getCidade(){
-      return $this->cidade;
-    }
-
-    public function setCidade($cidade){
-      $this->cidade = $cidade;
+    public function setImagem($logo){
+      $this->logo = $logo;
     }
 
     public function create(){
@@ -52,36 +42,10 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'insert into usuario (nome, email, cidade) values (?, ?, ?);';
+        $sql = 'insert into fornecedor (nome, logo) values (?, ?);';
         $pre = $con->prepare($sql);
         $pre->bindValue(1, $this->nome);
-        $pre->bindValue(2, $this->email);
-        $pre->bindValue(3, $this->cidade);
-        if ($pre->execute()){
-          return array('status' => 'sucesso');
-        }else{
-          var_dump($con->errorInfo());
-          var_dump($pre->errorInfo());
-          return array('status' => 'erro');
-        }
-      }catch(PDOException $pdoex){
-        var_dump($pdoex);
-        return array('status' => 'erro');
-      }
-    }
-
-    public function update($id){
-      $user = 'root';
-      $pass = '';
-      try {
-        $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'update usuario set nome = ?, email = ?, cidade = ? where id= ' . $id .';';
-        $pre = $con->prepare($sql);
-        $nome = str_replace("_", " ", $this->nome);
-        $cidade = str_replace("_", " ", $this->cidade);
-        $pre->bindValue(1, $nome);
-        $pre->bindValue(2, $this->email);
-        $pre->bindValue(3, $cidade);
+        $pre->bindValue(2, $this->logo);
         if ($pre->execute()){
           return array('status' => 'sucesso');
         }else{
@@ -100,7 +64,7 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'select id, nome, email, cidade from usuario order by nome asc;';
+        $sql = 'select * from fornecedor;';
         if ($data = $con->query($sql)) {
           return $data->fetchAll(PDO::FETCH_ASSOC);
         }else{
@@ -116,13 +80,36 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'select * from usuario where id =' . $id . ';';
+        $sql = 'select * from fornecedor where id =' . $id . ';';
         if ($data = $con->query($sql)) {
-          return $data->fetchAll(PDO::FETCH_ASSOC);
+          return $data->fetchAll(PDO::FETCH_ASSOC)[0];
         }else{
           return array('status' => 'erro');
         }
       }catch(PDOException $pdoex){
+        return array('status' => 'erro');
+      }
+    }
+
+    public function update($id){
+      $user = 'root';
+      $pass = '';
+      try {
+        $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
+        $sql = 'update fornecedor set nome = ?, logo = ? where id= ' . $id .';';
+        $pre = $con->prepare($sql);
+        $nome = str_replace("_", " ", $this->nome);
+        $pre->bindValue(1, $nome);
+        $pre->bindValue(2, $this->logo);
+        if ($pre->execute()){
+          return array('status' => 'sucesso');
+        }else{
+          var_dump($con->errorInfo());
+          var_dump($pre->errorInfo());
+          return array('status' => 'erro');
+        }
+      }catch(PDOException $pdoex){
+        var_dump($pdoex);
         return array('status' => 'erro');
       }
     }
@@ -132,11 +119,11 @@ use PDOException;
        $pass = '';
        try {
          $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-         $sql = 'DELETE FROM `usuario` WHERE id = ' . $id . ';';
+         $sql = 'DELETE FROM `fornecedor` WHERE id = ' . $id . ';';
          if ($data = $con->query($sql)) {
            echo "<script>
-                  alert('Usuário excluido com sucesso!!');
-                 window.location.href = 'http://localhost/HARDWARE171/Usuario/ver'
+                  alert('Fornecedor excluido com sucesso!!');
+                 window.location.href = 'http://localhost/HARDWARE171/Fornecedor/ver'
                  </script>";
          }else{
            return array('status' => 'erro');
