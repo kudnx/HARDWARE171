@@ -95,6 +95,14 @@
             <li><a href="/HARDWARE171/Produto/digitar">Digitar</a></li>
           </ul>
         </li>
+        <li>
+          Admin
+          <ul>
+            <li><a href="/HARDWARE171/Admin/ver">Ver</a></li>
+            <li><a href="/HARDWARE171/Admin/digitar">Digitar</a></li>
+            <li><a href="/HARDWARE171/Admin/sair">Sair</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
     <header>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 30-Out-2020 às 04:21
+-- Tempo de geração: 03-Nov-2020 às 23:12
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.2.33
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `hardware171`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `senha` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `admin`
+--
+
+INSERT INTO `admin` (`id`, `email`, `senha`) VALUES
+(3, 'admin123@gmail.com', '123456'),
+(4, 'botan@gmail.com', 'botan123'),
+(5, 'watame@gmail.com', 'watamesheep'),
+(7, 'teste@sfsdf', '698dc19d489c4e4db73e28a713eab07b');
 
 -- --------------------------------------------------------
 
@@ -61,7 +83,7 @@ CREATE TABLE `produto` (
 --
 
 INSERT INTO `produto` (`id`, `fornecedor_id`, `nome`, `preco`, `descricao`, `foto`) VALUES
-(8, 17, '3090', '150000', 'placa', '6432447_sd.jpg');
+(8, 17, '3090 stynx', '150000', 'placa', '6432447_sd.jpg');
 
 -- --------------------------------------------------------
 
@@ -89,6 +111,12 @@ INSERT INTO `usuario` (`id`, `nome`, `email`, `cidade`) VALUES
 --
 
 --
+-- Índices para tabela `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `fornecedor`
 --
 ALTER TABLE `fornecedor`
@@ -110,6 +138,12 @@ ALTER TABLE `usuario`
 --
 -- AUTO_INCREMENT de tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `fornecedor`

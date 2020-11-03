@@ -13,6 +13,28 @@ $config = ['settings' => [
 
 $app = new App();
 
+  $app->get('/', function (ServerRequestInterface $request, ResponseInterface $response, $args){
+    echo "
+      <!DOCTYPE html>
+      <html lang='pt-br' dir='ltr'>
+        <head>
+          <meta charset='utf-8'>
+          <title>Seja bem vindo!</title>
+        </head>
+        <body>
+          <h1>Login</h1>
+          <form action='/HARDWARE171/Admin/login' method='post' enctype='multipart/form-data'>
+          <label for='nome'>Digite o email cadastrado</label>
+          <input type='email' name='email' id='email'><br>
+          <label for='nome'>Digite a sua senha</label>
+          <input type='senha' name='senha' id='senha' accept='senha'><br>
+          <button>Login</button>
+          </form>
+        </body>
+      </html>
+    ";
+  });
+
   $app->any('/{modulo}/{acao}[/{id}]', function (ServerRequestInterface $request, ResponseInterface $response, $args){
     $modulo = 'HARDWARE171\\Controle\\Controle' . $args['modulo'];
     $acao = $args['acao'];

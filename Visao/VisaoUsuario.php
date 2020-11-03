@@ -1,6 +1,19 @@
 <?php
 namespace HARDWARE171\Visao;
 
+if(!isset($_SESSION))
+{
+    session_start();
+}
+
+if (!$_SESSION['login'] == true){
+  echo "
+    <script>
+      window.location.href = 'http://localhost/HARDWARE171/'
+    </script>
+  ";
+};
+
   class VisaoUsuario{
     public function __construct(){
     }
