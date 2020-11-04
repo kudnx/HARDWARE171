@@ -96,6 +96,7 @@ use HARDWARE171\Visao\VisaoAdmin;
       else{
         if($data[0]['senha'] == $senha){
           $_SESSION['login'] = true;
+          $_SESSION['admin'] = $data[0]['id'];
           echo "
             <script>
               window.location.href = 'http://localhost/HARDWARE171/Usuario/ver'

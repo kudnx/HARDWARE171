@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03-Nov-2020 às 23:12
+-- Tempo de geração: 04-Nov-2020 às 16:04
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.2.33
 
@@ -38,10 +38,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `email`, `senha`) VALUES
-(3, 'admin123@gmail.com', '123456'),
-(4, 'botan@gmail.com', 'botan123'),
-(5, 'watame@gmail.com', 'watamesheep'),
-(7, 'teste@sfsdf', '698dc19d489c4e4db73e28a713eab07b');
+(7, 'teste@sfsdf', '698dc19d489c4e4db73e28a713eab07b'),
+(8, 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3');
 
 -- --------------------------------------------------------
 
@@ -83,7 +81,8 @@ CREATE TABLE `produto` (
 --
 
 INSERT INTO `produto` (`id`, `fornecedor_id`, `nome`, `preco`, `descricao`, `foto`) VALUES
-(8, 17, '3090 stynx', '150000', 'placa', '6432447_sd.jpg');
+(8, 17, '3090 stynx', '150000', 'placa', '6432447_sd.jpg'),
+(9, 20, '3080 gamming OC', '100000', 'placa cara', 'kf-img (1).png');
 
 -- --------------------------------------------------------
 
@@ -105,6 +104,28 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id`, `nome`, `email`, `cidade`) VALUES
 (24, 'botaaaaaaaaaaaaaaaaaaaaaaaaaan', 'botan@gmail.com', 'tokyo'),
 (31, 'watameeeeeeee', 'sheep@gmail.com.br', 'tokyo');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `venda`
+--
+
+CREATE TABLE `venda` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `produto_id` int(11) NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `data` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `venda`
+--
+
+INSERT INTO `venda` (`id`, `usuario_id`, `produto_id`, `admin_id`, `data`) VALUES
+(1, 24, 8, 7, '2020-11-04 14:22:54'),
+(2, 31, 9, 7, '2020-11-04 15:02:24');
 
 --
 -- Índices para tabelas despejadas
@@ -136,6 +157,15 @@ ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `venda`
+--
+ALTER TABLE `venda`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `venda_ibfk_1` (`admin_id`),
+  ADD KEY `venda_ibfk_2` (`produto_id`),
+  ADD KEY `venda_ibfk_3` (`usuario_id`);
+
+--
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
@@ -143,7 +173,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `fornecedor`
@@ -155,13 +185,19 @@ ALTER TABLE `fornecedor`
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT de tabela `venda`
+--
+ALTER TABLE `venda`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restrições para despejos de tabelas
@@ -172,6 +208,14 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `produto`
   ADD CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `venda`
+--
+ALTER TABLE `venda`
+  ADD CONSTRAINT `venda_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `venda_ibfk_2` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `venda_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

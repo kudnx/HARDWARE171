@@ -103,6 +103,13 @@
             <li><a href="/HARDWARE171/Admin/sair">Sair</a></li>
           </ul>
         </li>
+        <li>
+          Venda
+          <ul>
+            <li><a href="/HARDWARE171/Venda/ver">Ver</a></li>
+            <li><a href="/HARDWARE171/Venda/nova">Nova</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
     <header>

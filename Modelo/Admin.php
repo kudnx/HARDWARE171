@@ -60,6 +60,22 @@ use PDOException;
       }
     }
 
+    public function recoverUm($id){
+      $user = 'root';
+      $pass = '';
+      try {
+        $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
+        $sql = 'select * from admin where id=' . $id . ';';
+        if ($data = $con->query($sql)) {
+          return $data->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+          return array('status' => 'erro');
+        }
+      }catch(PDOException $pdoex){
+        return array('status' => 'erro');
+      }
+    }
+
     public function recover(){
       $user = 'root';
       $pass = '';
@@ -100,7 +116,7 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = "select email, senha from admin where email='$email'";
+        $sql = "select id ,email, senha from admin where email='$email'";
         if ($data = $con->query($sql)) {
           return $data->fetchAll(PDO::FETCH_ASSOC);
         }else{
