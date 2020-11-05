@@ -1,11 +1,6 @@
 <?php
 namespace HARDWARE171\Controle;
 
-if(!isset($_SESSION))
-{
-    session_start();
-}
-
 use HARDWARE171\Modelo\Admin;
 use HARDWARE171\Visao\VisaoAdmin;
 
@@ -81,39 +76,24 @@ use HARDWARE171\Visao\VisaoAdmin;
       $modeloAdmin = new Admin(null);
 
       $visaoAdmin = new VisaoAdmin();
-      $msg = '';
 
       $data = $modeloAdmin->login($email);
 
-      if ($data == null){
-        echo "
-          <script>
-            window.location.href = 'http://localhost/HARDWARE171/'
-            alert('Administrador não encontrado!!');
-          </script>
-        ";
-      }
-      else{
+      if ($data !== null && count($data) > 0){
         if($data[0]['senha'] == $senha){
           $_SESSION['login'] = true;
           $_SESSION['admin'] = $data[0]['id'];
-          echo "
-            <script>
-              window.location.href = 'http://localhost/HARDWARE171/Usuario/ver'
-            </script>
-          ";
-        }
-        else{
-          echo "
-            <script>
-              window.location.href = 'http://localhost/HARDWARE171/'
-              alert('A senha digitada está errada!!');
-            </script>
-          ";
         }
       }
+    }
 
-      $visaoAdmin->mensagem('Gerenciamento de Administradores', 'Cadastro de Administradores', $msg);
+    public function verificaLogin(){
+      if (isset($_SESSION['login'])){
+        return true;
+      }
+      else{
+        return false;
+      }
     }
 
   }

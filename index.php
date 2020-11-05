@@ -6,6 +6,9 @@ require_once './vendor/autoload.php';
 use \Psr\Http\Message\ServerRequestInterface;
 use \Psr\Http\Message\ResponseInterface;
 use Slim\App;
+use HARDWARE171\Controle\ControleAdmin;
+
+session_start();
 
 $config = ['settings' => [
     'addContentLengthHeader' => false,
@@ -35,15 +38,45 @@ $app = new App();
     ";
   });
 
-  $app->any('/{modulo}/{acao}[/{id}]', function (ServerRequestInterface $request, ResponseInterface $response, $args){
-    $modulo = 'HARDWARE171\\Controle\\Controle' . $args['modulo'];
+  $app->any('/Admin/{acao}', function (ServerRequestInterface $request, ResponseInterface $response, $args){
+    $controleAdmin = new ControleAdmin();
+    $modulo = 'HARDWARE171\\Controle\\ControleAdmin';
     $acao = $args['acao'];
-    $parametro = null;
-    if (isset($args['ref'])) {
-      $parametro = $args['ref'];
-    }
-    $objeto = new $modulo($parametro);
+    $objeto = new $modulo(null);
     $objeto->$acao();
+    if ($controleAdmin->verificaLogin()){
+      echo "<script>
+        window.location.href = 'http://localhost/HARDWARE171/Usuario/ver';
+        </script>
+      ";
+    }
+    else{
+      echo "<script>
+        window.location.href = 'http://localhost/HARDWARE171/';
+        </script>
+      ";
+    }
+  });
+
+  $app->any('/{modulo}/{acao}[/{id}]', function (ServerRequestInterface $request, ResponseInterface $response, $args){
+    $controleAdmin = new ControleAdmin();
+    if ($controleAdmin->verificaLogin()){
+      $modulo = 'HARDWARE171\\Controle\\Controle' . $args['modulo'];
+      $acao = $args['acao'];
+      $parametro = null;
+      if (isset($args['ref'])) {
+        $parametro = $args['ref'];
+      }
+      $objeto = new $modulo($parametro);
+      $objeto->$acao();
+    }
+    else {
+      echo "<script>
+        alert('Por favor, efetue login!');
+        window.location.href = 'http://localhost/HARDWARE171/';
+        </script>
+      ";
+    }
   });
 
   $app->run();
