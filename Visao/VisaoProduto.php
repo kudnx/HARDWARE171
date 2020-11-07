@@ -1,6 +1,19 @@
 <?php
   namespace HARDWARE171\Visao;
 
+  if(!isset($_SESSION))
+  {
+      session_start();
+  }
+
+  if (!$_SESSION['login'] == true){
+    echo "
+      <script>
+        window.location.href = 'http://localhost/HARDWARE171/'
+      </script>
+    ";
+  };
+
   class VisaoProduto{
     public function __construct()
     {
@@ -20,8 +33,10 @@
       $parcial .= '</select><br>';
        $parcial .= '<label for="nome">Nome do Produto</label>
        <input type="text" name="nome" id="nome"><br>
-       <label for="preco">Preço do Produto</label>
-       <input type="number" name="preco" id="preco"><br>
+       <label for="precoCompra">Preço de Compra</label>
+       <input type="number" name="precoCompra" id="precoCompra"><br>
+       <label for="precoVenda">Preço de Venda</label>
+       <input type="number" name="precoVenda" id="precoVenda"><br>
        <label for="descricao">Descricao do Produto</label>
        <input type="text" name="descricao" id="descricao"><br>
        <label for="foto">Foto</label>
@@ -41,8 +56,10 @@
       <input type="text" name="fornecedor_id" id="fornecedor_id" value=' . $produto['fornecedor_id'] .' hidden>
       <label for="nome">Nome do Produto</label>
       <input type="text" name="nome" id="nome" value="' . $produto['produto_nome'] .'"><br>
-      <label for="preco">Preço do Produto</label>
-      <input type="number" name="preco" id="preco" value="' . $produto['preco'] . '"><br>
+      <label for="precoCompra">Preço de Compra</label>
+      <input type="number" name="precoCompra" id="precoCompra" value="' . $produto['precoCompra'] . '"><br>
+      <label for="precoVenda">Preço de Venda</label>
+      <input type="number" name="precoVenda" id="precoVenda" value="' . $produto['precoVenda'] . '"><br>
       <label for="descricao">Descricao do Produto</label>
       <input type="text" name="descricao" id="descricao" value="' . $produto['descricao'] . '"><br>
       <label for="foto">Foto</label>
@@ -59,8 +76,10 @@
       $conteudo = '';
       foreach ($lista as $produto) {
         $parcial = '<p>';
-        $parcial .= '<h3>' . $produto['produto_nome'] . '</h3>' . '<h3>' . 'R$ ' . $produto['preco']
-        . '</h3><br>' . $produto['descricao'] . '<br>' .$produto['fornecedor_nome']. '<br>'.
+        $parcial .= '<h3>' . $produto['produto_nome'] . '</h3>' . '<h3>Preço de Compra<br>' . 'R$ ' . $produto['precoCompra']
+        . '</h3><br>' . '<h3>Preço de Venda<br>' . 'R$ ' . $produto['precoVenda']
+        . '</h3><br>' . '<h3>Quantidade em Estoque<br>' . $produto['quantidade']
+        . '</h3><br>' . '<h3>' . $produto['descricao'] . '<br><br>' .$produto['fornecedor_nome']. '</h3><br>'.
         '<img src="'.$dir.$produto['foto'].'" width="700px" height="300px"/>';
         $id = $produto['produto_id'];
         $parcial .= '<p><br>';

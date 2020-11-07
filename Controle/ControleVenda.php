@@ -3,16 +3,16 @@
 
   use HARDWARE171\Modelo\Produto;
   use HARDWARE171\Modelo\Venda;
-  use HARDWARE171\Modelo\Usuario;
+  use HARDWARE171\Modelo\cliente;
   use HARDWARE171\Modelo\Admin;
   use HARDWARE171\Visao\VisaoVenda;
   use HARDWARE171\Visao\VisaoFornecedor;
-  use HARDWARE171\Visao\VisaoUsuario;
+  use HARDWARE171\Visao\Visaocliente;
 
   class ControleVenda{
     private $dadosFornecedor;
     private $dadosVenda;
-    private $dadosUsuario;
+    private $dadoscliente;
 
     public function __construct($parametro=null){
     }
@@ -25,44 +25,50 @@
 
     public function nova(){
       $visaoVenda = new VisaoVenda();
-      $modeloUsuario = new Usuario();
+      $modelocliente = new cliente();
       $modeloProduto = new Produto();
       $modeloAdmin = new Admin();
-      $dadosUsuario = $modeloUsuario->recover();
+      $dadoscliente = $modelocliente->recover();
       $dadosProduto = $modeloProduto->recover();
       $dadosAdmin = $_SESSION['admin'];
-      $visaoVenda->formulario($dadosUsuario, $dadosProduto, $dadosAdmin);
+      $visaoVenda->formulario($dadoscliente, $dadosProduto, $dadosAdmin);
     }
 
     public function confirmacao(){
-      $id_usuario = filter_input(INPUT_POST, 'usuario');
+      $id_cliente = filter_input(INPUT_POST, 'cliente');
       $id_produto = filter_input(INPUT_POST, 'produto');
       $id_admin = filter_input(INPUT_POST, 'admin_id');
-      $usuario = new Usuario();
+      $quantidade = filter_input(INPUT_POST, 'quantidade');
+      $cliente = new cliente();
       $produto = new Produto();
       $admin = new Admin();
-      $dadosUsuario = $usuario->recoverUm($id_usuario);
+      $dadoscliente = $cliente->recoverUm($id_cliente);
       $dadosProduto = $produto->recoverUm($id_produto);
       $dadosAdmin= $admin->recoverUm($id_admin);
       $visaoVenda = new VisaoVenda();
-      $visaoVenda->confirmacao($dadosUsuario, $dadosProduto, $dadosAdmin);
+      var_dump($quantidade);
+      $visaoVenda->confirmacao($dadoscliente, $dadosProduto, $dadosAdmin, $quantidade);
     }
 
     public function efetuada(){
-      $id_usuario = filter_input(INPUT_POST, 'usuario_id');
+      $id_cliente = filter_input(INPUT_POST, 'cliente_id');
       $id_produto = filter_input(INPUT_POST, 'produto_id');
       $id_admin = filter_input(INPUT_POST, 'admin_id');
+      $quantidade = filter_input(INPUT_POST, 'quantidade');
       $visaoVenda = new VisaoVenda();
+      var_dump($quantidade);
       $msg = '';
       
-      if ($id_usuario && $id_produto && $id_admin){
+      if ($id_cliente && $id_produto && $id_admin && $quantidade){
         $modeloVenda = new Venda();
-        $modeloVenda->setId($id_usuario);
+        $modeloVenda->setId($id_cliente);
         $modeloVenda->setProduto($id_produto);
         $modeloVenda->setAdmin($id_admin);
+        $modeloVenda->setQuantidade($quantidade);
 
         if($modeloVenda->create()){
           $msg = 'Venda cadastrado com sucesso';
+          var_dump($quantidade);
         } else {
           $msg = 'ERRO, venda nao inserida na base de dados';
         }

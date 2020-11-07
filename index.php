@@ -38,7 +38,7 @@ $app = new App();
     ";
   });
 
-  $app->any('/Admin/{acao}', function (ServerRequestInterface $request, ResponseInterface $response, $args){
+  $app->post('/Admin/{acao}', function (ServerRequestInterface $request, ResponseInterface $response, $args){
     $controleAdmin = new ControleAdmin();
     $modulo = 'HARDWARE171\\Controle\\ControleAdmin';
     $acao = $args['acao'];
@@ -46,7 +46,7 @@ $app = new App();
     $objeto->$acao();
     if ($controleAdmin->verificaLogin()){
       echo "<script>
-        window.location.href = 'http://localhost/HARDWARE171/Usuario/ver';
+        window.location.href = 'http://localhost/HARDWARE171/Cliente/ver';
         </script>
       ";
     }

@@ -4,40 +4,32 @@ namespace HARDWARE171\Modelo;
 use PDO;
 use PDOException;
 
-  class Venda
+  class Compra
   {
-    private $id_cliente;
+    private $id_fornecedor;
     private $id_produto;
-    private $id_admin;
     private $quantidade;
 
-    public function __construct($id_cliente = null) {
-      $this->id = $id_cliente;
-    }
-
-    public function getId(){
-      return $this->id;
-    }
-
-    public function setId($id_cliente){
-      $this->id = $id_cliente;
+    public function __construct($id_fornecedor = null) {
+      $this->id_fornecedor = $id_fornecedor;
     }
 
     public function getProduto(){
       return $this->produto;
     }
 
-    public function setProduto($produto){
-      $this->produto = $produto;
+    public function setProduto($id_produto){
+      $this->id_produto = $id_produto;
     }
 
-    public function getAdmin(){
-      return $this->admin;
+    public function getFornecedor(){
+      return $this->fornecedor;
     }
 
-    public function setAdmin($admin){
-      $this->admin = $admin;
+    public function setFornecedor($fornecedor){
+      $this->id_fornecedor = $fornecedor;
     }
+
     public function getQuantidade(){
       return $this->quantidade;
     }
@@ -51,12 +43,11 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'insert into venda (cliente_id, produto_id, admin_id, quantidade) values (?, ?, ?, ?);';
+        $sql = 'insert into compra (produto_id, fornecedor_id, quantidade) values (?, ?, ?);';
         $pre = $con->prepare($sql);
-        $pre->bindValue(1, $this->id);
-        $pre->bindValue(2, $this->produto);
-        $pre->bindValue(3, $this->admin);
-        $pre->bindValue(4, $this->quantidade);
+        $pre->bindValue(1, $this->id_produto);
+        $pre->bindValue(2, $this->id_fornecedor);
+        $pre->bindValue(3, $this->quantidade);
         if ($pre->execute()){
           return array('status' => 'sucesso');
         }else{
@@ -70,12 +61,12 @@ use PDOException;
       }
     }
 
-    public function recoverUm($id_cliente){
+    public function recoverUm($id_fornecedor){
       $user = 'root';
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'select * from admin where id=' . $id_cliente . ';';
+        $sql = 'select * from fornecedor where id=' . $id_fornecedor . ';';
         if ($data = $con->query($sql)) {
           return $data->fetchAll(PDO::FETCH_ASSOC);
         }else{
@@ -91,12 +82,10 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'select data as data_venda, produto.nome as produto_nome, produto.precoVenda
-        as produto_precoVenda, venda.quantidade, admin.email as admin_email, cliente.nome as cliente_nome,
-        cliente.email as cliente_email, cliente.cidade as cliente_cidade FROM venda
-        inner join produto on venda.produto_id = produto.id inner join admin on
-        venda.admin_id = admin.id inner join cliente on venda.cliente_id = cliente.id
-        order by data_venda desc';
+        $sql = 'select compra.data as data_compra, produto.nome as produto_nome, fornecedor.nome as fornecedor_nome, compra.quantidade as quantidade 
+        from compra inner join produto on compra.produto_id = produto.id 
+        inner join fornecedor on compra.fornecedor_id = fornecedor.id
+        order by data_Compra desc';
         if ($data = $con->query($sql)) {
           return $data->fetchAll(PDO::FETCH_ASSOC);
         }else{

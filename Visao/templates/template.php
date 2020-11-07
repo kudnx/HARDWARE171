@@ -75,10 +75,10 @@
     <nav>
       <ul>
         <li>
-          Usuários
+          Clientes
           <ul>
-            <li><a href="/HARDWARE171/Usuario/ver">Ver</a></li>
-            <li><a href="/HARDWARE171/Usuario/digitar">Digitar</a></li>
+            <li><a href="/HARDWARE171/cliente/ver">Ver</a></li>
+            <li><a href="/HARDWARE171/cliente/digitar">Digitar</a></li>
           </ul>
         </li>
         <li>
@@ -101,6 +101,13 @@
             <li><a href="/HARDWARE171/Admin/ver">Ver</a></li>
             <li><a href="/HARDWARE171/Admin/digitar">Digitar</a></li>
             <li><a href="/HARDWARE171/Admin/sair">Sair</a></li>
+          </ul>
+        </li>
+        <li>
+          Compra
+          <ul>
+            <li><a href="/HARDWARE171/Compra/ver">Ver</a></li>
+            <li><a href="/HARDWARE171/Compra/nova">Nova</a></li>
           </ul>
         </li>
         <li>

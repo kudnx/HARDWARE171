@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04-Nov-2020 às 16:04
--- Versão do servidor: 10.4.14-MariaDB
--- versão do PHP: 7.2.33
+-- Generation Time: Nov 06, 2020 at 06:26 PM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.2.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `hardware171`
+-- Database: `hardware171`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -34,7 +34,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `email`, `senha`) VALUES
@@ -44,7 +44,58 @@ INSERT INTO `admin` (`id`, `email`, `senha`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `fornecedor`
+-- Table structure for table `cliente`
+--
+
+CREATE TABLE `cliente` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(200) DEFAULT NULL,
+  `email` varchar(200) NOT NULL,
+  `cidade` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cliente`
+--
+
+INSERT INTO `cliente` (`id`, `nome`, `email`, `cidade`) VALUES
+(33, 'Joao', 'joao@gmail.com', 'Guanhães'),
+(34, 'Maria', 'maria@outlook.com', 'Belo Horizonte');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `compra`
+--
+
+CREATE TABLE `compra` (
+  `id` int(11) NOT NULL,
+  `produto_id` int(11) NOT NULL,
+  `fornecedor_id` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `data` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `compra`
+--
+
+INSERT INTO `compra` (`id`, `produto_id`, `fornecedor_id`, `quantidade`, `data`) VALUES
+(5, 11, 20, 50, '2020-11-06 17:14:42'),
+(6, 12, 17, 25, '2020-11-06 17:22:28');
+
+--
+-- Triggers `compra`
+--
+DELIMITER $$
+CREATE TRIGGER `addproduto` AFTER INSERT ON `compra` FOR EACH ROW UPDATE produto set quantidade = quantidade + NEW.quantidade where id = NEW.produto_id
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fornecedor`
 --
 
 CREATE TABLE `fornecedor` (
@@ -54,7 +105,7 @@ CREATE TABLE `fornecedor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `fornecedor`
+-- Dumping data for table `fornecedor`
 --
 
 INSERT INTO `fornecedor` (`id`, `nome`, `logo`) VALUES
@@ -64,158 +115,168 @@ INSERT INTO `fornecedor` (`id`, `nome`, `logo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `produto`
+-- Table structure for table `produto`
 --
 
 CREATE TABLE `produto` (
   `id` int(11) NOT NULL,
   `fornecedor_id` int(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
-  `preco` decimal(30,0) NOT NULL,
+  `precoCompra` decimal(30,0) NOT NULL,
+  `precoVenda` decimal(30,0) NOT NULL,
+  `quantidade` int(11) NOT NULL,
   `descricao` varchar(200) NOT NULL,
   `foto` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `produto`
+-- Dumping data for table `produto`
 --
 
-INSERT INTO `produto` (`id`, `fornecedor_id`, `nome`, `preco`, `descricao`, `foto`) VALUES
-(8, 17, '3090 stynx', '150000', 'placa', '6432447_sd.jpg'),
-(9, 20, '3080 gamming OC', '100000', 'placa cara', 'kf-img (1).png');
+INSERT INTO `produto` (`id`, `fornecedor_id`, `nome`, `precoCompra`, `precoVenda`, `quantidade`, `descricao`, `foto`) VALUES
+(11, 20, 'Asus b450 Gaming', '600', '800', 45, 'Placa Mae', 'unnamed.png'),
+(12, 17, 'X370 Aorus Gaming', '1200', '1700', 25, 'Placa Mae', 'placa-mae-gigabyte-aorus-ga-ax370-gaming-5-rgb-ddr4-slicrossfire-am4_36771.png');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `usuario`
---
-
-CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(200) DEFAULT NULL,
-  `email` varchar(200) NOT NULL,
-  `cidade` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `usuario`
---
-
-INSERT INTO `usuario` (`id`, `nome`, `email`, `cidade`) VALUES
-(24, 'botaaaaaaaaaaaaaaaaaaaaaaaaaan', 'botan@gmail.com', 'tokyo'),
-(31, 'watameeeeeeee', 'sheep@gmail.com.br', 'tokyo');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `venda`
+-- Table structure for table `venda`
 --
 
 CREATE TABLE `venda` (
   `id` int(11) NOT NULL,
-  `usuario_id` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
   `produto_id` int(11) NOT NULL,
   `admin_id` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
   `data` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `venda`
+-- Dumping data for table `venda`
 --
 
-INSERT INTO `venda` (`id`, `usuario_id`, `produto_id`, `admin_id`, `data`) VALUES
-(1, 24, 8, 7, '2020-11-04 14:22:54'),
-(2, 31, 9, 7, '2020-11-04 15:02:24');
+INSERT INTO `venda` (`id`, `cliente_id`, `produto_id`, `admin_id`, `quantidade`, `data`) VALUES
+(3, 33, 11, 8, 5, '2020-11-06 17:25:02');
 
 --
--- Índices para tabelas despejadas
+-- Triggers `venda`
+--
+DELIMITER $$
+CREATE TRIGGER `removeproduto` BEFORE INSERT ON `venda` FOR EACH ROW UPDATE produto set quantidade = quantidade - NEW.quantidade where id = NEW.produto_id
+$$
+DELIMITER ;
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Índices para tabela `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `fornecedor`
+-- Indexes for table `cliente`
+--
+ALTER TABLE `cliente`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `compra`
+--
+ALTER TABLE `compra`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `compra_ibfk_1` (`produto_id`),
+  ADD KEY `fornecedor_id` (`fornecedor_id`);
+
+--
+-- Indexes for table `fornecedor`
 --
 ALTER TABLE `fornecedor`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `produto`
+-- Indexes for table `produto`
 --
 ALTER TABLE `produto`
   ADD PRIMARY KEY (`id`),
   ADD KEY `produto_ibfk_1` (`fornecedor_id`);
 
 --
--- Índices para tabela `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices para tabela `venda`
+-- Indexes for table `venda`
 --
 ALTER TABLE `venda`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `venda_ibfk_1` (`admin_id`),
-  ADD KEY `venda_ibfk_2` (`produto_id`),
-  ADD KEY `venda_ibfk_3` (`usuario_id`);
+  ADD KEY `cliente_id` (`cliente_id`),
+  ADD KEY `admin_id` (`admin_id`),
+  ADD KEY `produto_id` (`produto_id`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de tabela `admin`
+-- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de tabela `fornecedor`
+-- AUTO_INCREMENT for table `cliente`
+--
+ALTER TABLE `cliente`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT for table `compra`
+--
+ALTER TABLE `compra`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `fornecedor`
 --
 ALTER TABLE `fornecedor`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT de tabela `produto`
+-- AUTO_INCREMENT for table `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT de tabela `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
-
---
--- AUTO_INCREMENT de tabela `venda`
+-- AUTO_INCREMENT for table `venda`
 --
 ALTER TABLE `venda`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Restrições para despejos de tabelas
+-- Constraints for dumped tables
 --
 
 --
--- Limitadores para a tabela `produto`
+-- Constraints for table `compra`
+--
+ALTER TABLE `compra`
+  ADD CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `compra_ibfk_2` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedor` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `produto`
 --
 ALTER TABLE `produto`
   ADD CONSTRAINT `produto_ibfk_1` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `venda`
+-- Constraints for table `venda`
 --
 ALTER TABLE `venda`
-  ADD CONSTRAINT `venda_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `venda_ibfk_2` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `venda_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `venda_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `venda_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `venda_ibfk_3` FOREIGN KEY (`produto_id`) REFERENCES `produto` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

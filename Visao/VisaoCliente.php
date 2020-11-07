@@ -1,19 +1,32 @@
 <?php
 namespace HARDWARE171\Visao;
 
-  class VisaoUsuario{
+if(!isset($_SESSION))
+{
+    session_start();
+}
+
+if (!$_SESSION['login'] == true){
+  echo "
+    <script>
+      window.location.href = 'http://localhost/HARDWARE171/'
+    </script>
+  ";
+};
+
+  class Visaocliente{
     public function __construct(){
     }
 
     public function formulario(){
-      $titulo = 'Gerenciamento de Usuários';
-      $subtitulo = 'Cadastro de Usuários';
-      $conteudo = '<form action="/HARDWARE171/Usuario/inserir" method="post">
-      <label for="nome">Nome do Usuario</label>
+      $titulo = 'Gerenciamento de Clientes';
+      $subtitulo = 'Cadastro de Clientes';
+      $conteudo = '<form action="/HARDWARE171/cliente/inserir" method="post">
+      <label for="nome">Nome do cliente</label>
       <input type="text" name="nome" id="nome"><br>
-      <label for="nome">Email do Usuário</label>
+      <label for="nome">Email do Cliente</label>
       <input type="email" name="email" id="email"><br>
-      <label for="nome">Cidade do Usuário</label>
+      <label for="nome">Cidade do Cliente</label>
       <input type="text" name="cidade" id="cidade"><br>
       <button>Cadastrar</button>
       </form>';
@@ -21,15 +34,15 @@ namespace HARDWARE171\Visao;
     }
 
     public function formularioEdicao($dados){
-      $titulo = 'Gerenciamento de Usuários';
-      $subtitulo = 'Edição de Usuários';
-      $conteudo = '<form action="/HARDWARE171/Usuario/atualizar" method="post">
+      $titulo = 'Gerenciamento de Clientes';
+      $subtitulo = 'Edição de Clientes';
+      $conteudo = '<form action="/HARDWARE171/cliente/atualizar" method="post">
       <input type="text" name="id" id="id" value="' . $dados[0]['id'] .'" hidden><br>
-      <label for="nome">Nome do Usuario</label>
+      <label for="nome">Nome do cliente</label>
       <input type="text" name="nome" id="nome" value="' . $dados[0]['nome'] .'"><br>
-      <label for="nome">Email do Usuário</label>
+      <label for="nome">Email do Cliente</label>
       <input type="email" name="email" id="email" value="' . $dados[0]['email'] .'"><br>
-      <label for="nome">Cidade do Usuário</label>
+      <label for="nome">Cidade do Cliente</label>
       <input type="text" name="cidade" id="cidade" value="' . $dados[0]['cidade'] .'"><br>
       <button>Atualizar</button>
       </form>';
@@ -37,14 +50,14 @@ namespace HARDWARE171\Visao;
     }
 
     public function listar($lista){
-      $titulo = 'Gerenciamento de Usuários';
-      $subtitulo = 'Usuários Cadastrados';
+      $titulo = 'Gerenciamento de Clientes';
+      $subtitulo = 'Clientes Cadastrados';
       $conteudo = '';
-      foreach ($lista as $usuario) {
+      foreach ($lista as $cliente) {
         $parcial = '<p>';
-        $parcial .= '<h3>' . $usuario['nome'] . '</h3>' . $usuario['email'] .
-        ', ' . $usuario['cidade'];
-        $id = $usuario['id'];
+        $parcial .= '<h3>' . $cliente['nome'] . '</h3>' . $cliente['email'] .
+        ', ' . $cliente['cidade'];
+        $id = $cliente['id'];
         $parcial .= '<p><br>';
         $parcial .= '<a href="editar/'. $id .'"><button>Editar</button></a>';
         $parcial .= '<a href="excluir/' . $id .'"><button>Excluir</button></a>';

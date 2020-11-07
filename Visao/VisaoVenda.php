@@ -1,18 +1,32 @@
 <?php
 namespace HARDWARE171\Visao;
 
+if(!isset($_SESSION))
+{
+    session_start();
+}
+
+if (!$_SESSION['login'] == true){
+  echo "
+    <script>
+      window.location.href = 'http://localhost/HARDWARE171/'
+    </script>
+  ";
+};
+
+
   class VisaoVenda{
     public function __construct(){
     }
 
-    public function formulario($dadosUsuario,$dadosProduto,$dadosAdmin){
+    public function formulario($dadoscliente,$dadosProduto,$dadosAdmin){
       $titulo = 'Gerenciamento de Vendas';
       $subtitulo = 'Cadastro de Vendas';
       $parcial = '<form action="/HARDWARE171/Venda/confirmacao" method="post">';
-      $parcial .= '<select name="usuario" id="usuario">';
+      $parcial .= '<select name="cliente" id="cliente">';
 
-      foreach ($dadosUsuario as $usuario) {
-        $parcial .= '<option value=' .$usuario['id']. '>' .$usuario['nome']. '</option>';
+      foreach ($dadoscliente as $cliente) {
+        $parcial .= '<option id="titre" value=' .$cliente['id']. '>' .$cliente['nome']. '</option>';
       };
       $parcial .= '</select><br><br>';
       $parcial .= '<select name="produto" id="produto">';
@@ -20,28 +34,29 @@ namespace HARDWARE171\Visao;
         $parcial .= '<option value=' .$produto['produto_id']. '>' .$produto['produto_nome']. '</option>';
       };
       $parcial .= '</select><br><br>';
+      $parcial .= '<input type="number" name="quantidade" id="quantidade" min="1" max="10"</option>';
       $parcial .= '<input type="text" name="admin_id" id="admin_id" value='.$dadosAdmin.' hidden>';
-      $parcial .= '<button>Confirmar</button>
+      $parcial .= '<button onclick="show_alert();" id = "botao">Confirmar</button>
                 </form>';
       $conteudo = $parcial;
       include './Visao/templates/template.php';
     }
 
-    public function confirmacao($dadosUsuario, $dadosProduto, $dadosAdmin){
+    public function confirmacao($dadoscliente, $dadosProduto, $dadosAdmin, $quantidade){
       $dir = '../Imagens/Produto/';
       $titulo = 'Gerenciamento de Vendas';
       $subtitulo = 'Comfirmação da Venda';
       $conteudo = '';
 
-      $parcial = '<h1>Dados do Usuário<h1>';
+      $parcial = '<h1>Dados do Cliente<h1>';
       $parcial .= '<p>';
-      $parcial .= '<h2>Nome do Usuário: </h2>';
-      $parcial .= '<h3>' . $dadosUsuario[0]['nome'] . '</h3>';
-      $parcial .= '<h2>Email do Usuário: </h2>';
-      $parcial .= '<h3>' . $dadosUsuario[0]['email'] . '</h3>';
-      $parcial .= '<h2>Cidade do Usuário: </h2>';
-      $parcial .= '<h3>' . $dadosUsuario[0]['cidade'] . '</h3>';
-      $id = $dadosUsuario[0]['id'];
+      $parcial .= '<h2>Nome do Cliente: </h2>';
+      $parcial .= '<h3>' . $dadoscliente[0]['nome'] . '</h3>';
+      $parcial .= '<h2>Email do Cliente: </h2>';
+      $parcial .= '<h3>' . $dadoscliente[0]['email'] . '</h3>';
+      $parcial .= '<h2>Cidade do Cliente: </h2>';
+      $parcial .= '<h3>' . $dadoscliente[0]['cidade'] . '</h3>';
+      $id = $dadoscliente[0]['id'];
 
       $parcial .= '<br><br>';
       $parcial .= '<h1>Dados da compra:</h1>';
@@ -49,7 +64,9 @@ namespace HARDWARE171\Visao;
       $parcial .= '<h1>Nome do Produto: </h1>';
       $parcial .= '<h2>' . $dadosProduto['produto_nome'] . '</h2>';
       $parcial .= '<h3>Preço do Produto: </h3>';
-      $parcial .= '<h4>' . $dadosProduto['preco'] . '</h4>';
+      $parcial .= '<h4>' . $dadosProduto['precoVenda'] . '</h4>';
+      $parcial .= '<h3>Quantidade</h3>';
+      $parcial .= '<h4>' . $quantidade . '</h4>';
       $parcial .= '<h3>Descrição do Produto: </h3>';
       $parcial .= '<h4>' . $dadosProduto['descricao'] . '</h4>';
       $parcial .= '<h3>Foto do Produto </h3>';
@@ -64,7 +81,8 @@ namespace HARDWARE171\Visao;
       $parcial .= '<h2>' . $dadosAdmin[0]['email'] . '</h2>';
 
       $parcial .= '<form action="/HARDWARE171/Venda/efetuada" method="post">';
-      $parcial .= '<input type="text" name="usuario_id" id="usuario_id" value='.$dadosUsuario[0]['id'].' hidden>';
+      $parcial .= '<input type="text" name="cliente_id" id="cliente_id" value='.$dadoscliente[0]['id'].' hidden>';
+      $parcial .= '<input type="text" name="quantidade" id="quantidade" value="'.$quantidade.'" hidden>';
       $parcial .= '<input type="text" name="produto_id" id="produto_id" value='.$dadosProduto['produto_id'].' hidden>';
       $parcial .= '<input type="text" name="admin_id" id="admin_id" value='.$dadosAdmin[0]['id'].' hidden>';
       $parcial .= '<button>Confirmar</button>
@@ -85,21 +103,23 @@ namespace HARDWARE171\Visao;
                      <th>Data Venda</th>
                      <th>Produto Nome</th>
                      <th>Produto Preço</th>
+                     <th>Quantidade</th>
                      <th>Email do administardor</th>
-                     <th>Nome do Usuário</th>
-                     <th>Email do Usuário</th>
-                     <th>Cidade do Usuário</th>
+                     <th>Nome do Cliente</th>
+                     <th>Email do Cliente</th>
+                     <th>Cidade do Cliente</th>
                  </tr>
                  </thead>';
       foreach ($lista as $venda) {
         $parcial .= '<tr>
                         <td>'.$venda['data_venda'].'</td>
                         <td>'.$venda['produto_nome'].'</td>
-                        <td>'.$venda['produto_preco'].'</td>
+                        <td>'.$venda['produto_precoVenda'].'</td>
+                        <td>'.$venda['quantidade'].'</td>
                         <td>'.$venda['admin_email'].'</td>
-                        <td>'.$venda['usuario_nome'].'</td>
-                        <td>'.$venda['usuario_email'].'</td>
-                        <td>'.$venda['usuario_cidade'].'</td>
+                        <td>'.$venda['cliente_nome'].'</td>
+                        <td>'.$venda['cliente_email'].'</td>
+                        <td>'.$venda['cliente_cidade'].'</td>
                     </tr>';
       };
       $parcial .= '</table>';

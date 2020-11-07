@@ -4,7 +4,7 @@ namespace HARDWARE171\Modelo;
 use PDO;
 use PDOException;
 
-  class Usuario
+  class cliente
   {
     private $id;
     private $nome;
@@ -52,7 +52,7 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'insert into usuario (nome, email, cidade) values (?, ?, ?);';
+        $sql = 'insert into cliente (nome, email, cidade) values (?, ?, ?);';
         $pre = $con->prepare($sql);
         $pre->bindValue(1, $this->nome);
         $pre->bindValue(2, $this->email);
@@ -75,7 +75,7 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'update usuario set nome = ?, email = ?, cidade = ? where id= ' . $id .';';
+        $sql = 'update cliente set nome = ?, email = ?, cidade = ? where id= ' . $id .';';
         $pre = $con->prepare($sql);
         $pre->bindValue(1, $this->nome);
         $pre->bindValue(2, $this->email);
@@ -98,7 +98,7 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'select id, nome, email, cidade from usuario order by nome asc;';
+        $sql = 'select id, nome, email, cidade from cliente order by nome asc;';
         if ($data = $con->query($sql)) {
           return $data->fetchAll(PDO::FETCH_ASSOC);
         }else{
@@ -114,7 +114,7 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'select * from usuario where id =' . $id . ';';
+        $sql = 'select * from cliente where id =' . $id . ';';
         if ($data = $con->query($sql)) {
           return $data->fetchAll(PDO::FETCH_ASSOC);
         }else{
@@ -130,11 +130,11 @@ use PDOException;
        $pass = '';
        try {
          $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-         $sql = 'DELETE FROM `usuario` WHERE id = ' . $id . ';';
+         $sql = 'DELETE FROM `cliente` WHERE id = ' . $id . ';';
          if ($data = $con->query($sql)) {
            echo "<script>
-                  alert('Usuário excluido com sucesso!!');
-                 window.location.href = 'http://localhost/HARDWARE171/Usuario/ver'
+                  alert('Cliente excluido com sucesso!!');
+                 window.location.href = 'http://localhost/HARDWARE171/cliente/ver'
                  </script>";
          }else{
            return array('status' => 'erro');

@@ -40,7 +40,8 @@
       $dir = './Imagens/Produto/';
       $fornecedor = filter_input(INPUT_POST, 'fornecedor');
       $nome = filter_input(INPUT_POST, 'nome');
-      $preco = filter_input(INPUT_POST, 'preco');
+      $precoCompra = filter_input(INPUT_POST, 'precoCompra');
+      $precoVenda = filter_input(INPUT_POST, 'precoVenda');
       $descricao = filter_input(INPUT_POST, 'descricao');
       $foto = $_FILES['foto']['name'];
       $visaoProduto = new VisaoProduto();
@@ -51,11 +52,12 @@
         move_uploaded_file($_FILES['foto']['tmp_name'], $dir.$foto);
       }
 
-      if (isset($fornecedor) && $nome && $preco && $descricao){
+      if (isset($fornecedor) && $nome && $precoCompra && $precoVenda && $descricao){
         $modeloProduto = new Produto();
         $modeloProduto->setFornecedor($fornecedor);
         $modeloProduto->setnome($nome);
-        $modeloProduto->setpreco($preco);
+        $modeloProduto->setprecoCompra($precoCompra);
+        $modeloProduto->setprecoVenda($precoVenda);
         $modeloProduto->setdescricao($descricao);
         $modeloProduto->setfoto($foto);
 
@@ -85,7 +87,8 @@
       $id = filter_input(INPUT_POST, 'id');
       $fornecedor_id = filter_input(INPUT_POST, 'fornecedor_id');
       $nome = filter_input(INPUT_POST, 'nome');
-      $preco = filter_input(INPUT_POST, 'preco');
+      $precoCompra = filter_input(INPUT_POST, 'precoCompra');
+      $precoVenda = filter_input(INPUT_POST, 'precoVenda');
       $descricao = filter_input(INPUT_POST, 'descricao');
       $foto = $_FILES['foto']['name'];
 
@@ -96,14 +99,15 @@
 
       $modeloProduto = new Produto(null);
       $modeloProduto->setNome($nome);
-      $modeloProduto->setPreco($preco);
+      $modeloProduto->setPrecoCompra($precoCompra);
+      $modeloProduto->setPrecoVenda($precoVenda);
       $modeloProduto->setDescricao($descricao);
       $modeloProduto->setFoto($foto);
 
       $visaoProduto = new visaoProduto();
       $msg = '';
 
-      if($nome && $preco && $descricao && $foto){
+      if($nome && $precoCompra && $precoVenda && $descricao && $foto){
         $retorno = $modeloProduto->update($id);
 
         if(strcmp($retorno['status'], 'sucesso') == 0){

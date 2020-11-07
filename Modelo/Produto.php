@@ -41,12 +41,20 @@ use PDOException;
       $this->nome = $nome;
     }
 
-    public function getpreco() {
-      return $this->preco;
+    public function getprecoCompra() {
+      return $this->precoCompra;
     }
 
-    public function setpreco($preco) {
-      $this->preco = $preco;
+    public function setprecoCompra($precoCompra) {
+      $this->precoCompra = $precoCompra;
+    }
+
+    public function getprecoVenda() {
+      return $this->precoCompra;
+    }
+
+    public function setprecoVenda($precoVenda) {
+      $this->precoVenda = $precoVenda;
     }
 
     public function getdescricao() {
@@ -70,13 +78,14 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'insert into produto (fornecedor_id, nome, preco, descricao, foto) values (?, ?, ?, ?, ?);';
+        $sql = 'insert into produto (fornecedor_id, nome, precoCompra, precoVenda, descricao, foto) values (?, ?, ?, ?, ?, ?);';
         $pre = $con->prepare($sql);
         $pre->bindValue(1, $this->fornecedor_id);
         $pre->bindValue(2, $this->nome);
-        $pre->bindValue(3, $this->preco);
-        $pre->bindValue(4, $this->descricao);
-        $pre->bindValue(5, $this->foto);
+        $pre->bindValue(3, $this->precoCompra);
+        $pre->bindValue(4, $this->precoVenda);
+        $pre->bindValue(5, $this->descricao);
+        $pre->bindValue(6, $this->foto);
         if ($pre->execute()){
           return array('status' => 'sucesso');
         }else{
@@ -96,7 +105,7 @@ use PDOException;
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
         $sql = 'select produto.id as produto_id, fornecedor_id, produto.nome as produto_nome,
-         preco, descricao, foto, fornecedor.id as fornecedor_id, fornecedor.nome as fornecedor_nome,
+         precoCompra, precoVenda, quantidade, descricao, foto, fornecedor.id as fornecedor_id, fornecedor.nome as fornecedor_nome,
           logo from produto inner join fornecedor on produto.fornecedor_id = fornecedor.id';
         if ($data = $con->query($sql)) {
           return $data->fetchAll(PDO::FETCH_ASSOC);
@@ -114,7 +123,7 @@ use PDOException;
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
         $sql = 'select produto.id as produto_id, fornecedor_id, produto.nome as produto_nome,
-         preco, descricao, foto, fornecedor.id as fornecedor_id, fornecedor.nome as fornecedor_nome,
+         precoCompra, precoVenda, quantidade, descricao, foto, fornecedor.id as fornecedor_id, fornecedor.nome as fornecedor_nome,
           logo from produto inner join fornecedor on produto.fornecedor_id = fornecedor.id
           where produto.id =' . $id . ';';
         if ($data = $con->query($sql)) {
@@ -151,12 +160,13 @@ use PDOException;
       $pass = '';
       try {
         $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
-        $sql = 'update produto set nome = ?, preco = ?, descricao = ?, foto = ? where id= ' . $id .';';
+        $sql = 'update produto set nome = ?, precoCompra = ?, precoVenda = ?, descricao = ?, foto = ? where id= ' . $id .';';
         $pre = $con->prepare($sql);
         $pre->bindValue(1, $this->nome);
-        $pre->bindValue(2, $this->preco);
-        $pre->bindValue(3, $this->descricao);
-        $pre->bindValue(4, $this->foto);
+        $pre->bindValue(2, $this->precoCompra);
+        $pre->bindValue(3, $this->precoVenda);
+        $pre->bindValue(4, $this->descricao);
+        $pre->bindValue(5, $this->foto);
         if ($pre->execute()){
           return array('status' => 'sucesso');
         }else{
