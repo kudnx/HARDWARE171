@@ -13,6 +13,8 @@ if (!$_SESSION['login'] == true){
     </script>
   ";
 };
+?>
+<?php
 
   class VisaoCompra{
     public function __construct(){
@@ -21,7 +23,7 @@ if (!$_SESSION['login'] == true){
     public function formulario($dadosfornecedor,$dadosProduto){
       $titulo = 'Gerenciamento de Compra';
       $subtitulo = 'Cadastro de Compra';
-      $parcial = '<form action="/HARDWARE171/Compra/confirmacao" method="post">';
+      $parcial = '<form name = "formulario1" action="/HARDWARE171/Compra/confirmacao" method="post">';
 
       $parcial .= '<select name="produto" id="produto">';
       foreach ($dadosProduto as $produto) {
@@ -29,9 +31,9 @@ if (!$_SESSION['login'] == true){
       };
       $parcial .= '</select><br><br>';
       $parcial .= '<label>Quantidade</label>';
-      $parcial .= '<input type="number" id="quantidade" name="quantidade" min="1">';
+      $parcial .= '<input type="number" id="quantidade" name="quantidade" min="1"> max="1" required';
       $parcial .= '</select><br><br>';
-      $parcial .= '<button>Confirmar</button>
+      $parcial .= '<button onclick=validar()>Confirmar</button>
       </form>';
       $conteudo = $parcial;
       include './Visao/templates/template.php';

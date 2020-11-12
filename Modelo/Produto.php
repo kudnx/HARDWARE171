@@ -136,6 +136,22 @@ use PDOException;
       }
     }
 
+    public function recoverQuantidade($id_produto){
+      $user = 'root';
+      $pass = '';
+      try {
+        $con = new PDO('mysql:server=localhost;dbname=hardware171;port=3306', $user, $pass);
+        $sql = 'select quantidade from produto where id=' . $id_produto . ';';
+        if ($data = $con->query($sql)) {
+          return $data->fetchAll(PDO::FETCH_ASSOC);
+        }else{
+          return array('status' => 'erro');
+        }
+      }catch(PDOException $pdoex){
+        return array('status' => 'erro');
+      }
+    }
+
     public function delete($id){
        $user = 'root';
        $pass = '';

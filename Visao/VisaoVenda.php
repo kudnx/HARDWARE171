@@ -13,30 +13,37 @@ if (!$_SESSION['login'] == true){
     </script>
   ";
 };
+?>
 
-
+<?php
   class VisaoVenda{
     public function __construct(){
     }
-
+    public function quantidade($quantidade){
+      echo $quantidade;
+    }
     public function formulario($dadoscliente,$dadosProduto,$dadosAdmin){
       $titulo = 'Gerenciamento de Vendas';
       $subtitulo = 'Cadastro de Vendas';
       $parcial = '<form action="/HARDWARE171/Venda/confirmacao" method="post">';
+      $parcial .= '<p>Cliente</p>';
       $parcial .= '<select name="cliente" id="cliente">';
 
       foreach ($dadoscliente as $cliente) {
         $parcial .= '<option id="titre" value=' .$cliente['id']. '>' .$cliente['nome']. '</option>';
       };
       $parcial .= '</select><br><br>';
+      $parcial .= '<p>Produto</p>';
       $parcial .= '<select name="produto" id="produto">';
+      $parcial .= '<option value="invalid">--</option>';
       foreach ($dadosProduto as $produto) {
         $parcial .= '<option value=' .$produto['produto_id']. '>' .$produto['produto_nome']. '</option>';
       };
       $parcial .= '</select><br><br>';
-      $parcial .= '<input type="number" name="quantidade" id="quantidade" min="1" max="10"</option>';
+      $parcial .= '<p>Quantidade</p>';
+      $parcial .= '<input type="number" name="quantidade" id="quantidade" min="1" max="1" required</option>';
       $parcial .= '<input type="text" name="admin_id" id="admin_id" value='.$dadosAdmin.' hidden>';
-      $parcial .= '<button onclick="show_alert();" id = "botao">Confirmar</button>
+      $parcial .= '<button>Confirmar</button>
                 </form>';
       $conteudo = $parcial;
       include './Visao/templates/template.php';

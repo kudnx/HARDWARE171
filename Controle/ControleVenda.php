@@ -46,8 +46,15 @@
       $dadosProduto = $produto->recoverUm($id_produto);
       $dadosAdmin= $admin->recoverUm($id_admin);
       $visaoVenda = new VisaoVenda();
-      var_dump($quantidade);
       $visaoVenda->confirmacao($dadoscliente, $dadosProduto, $dadosAdmin, $quantidade);
+    }
+
+    public function quantidade(){
+      $id_produto = filter_input(INPUT_POST, 'produto_id');
+      $venda = new Venda();
+      $quantidade = $venda->recoverQuantidade($id_produto);
+      $visaoVenda = new VisaoVenda();
+      $visaoVenda->quantidade($quantidade[0]['quantidade']);
     }
 
     public function efetuada(){

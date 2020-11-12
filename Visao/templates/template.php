@@ -1,6 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-br" dir="ltr">
   <head>
+  <script src="http://localhost/HARDWARE171/Script/jquery-3.5.1.js" type="text/JavaScript"></script>
+
+  <script>
+
+  $(document).ready(function(){
+    $("#produto").change(function(){  
+      var produto_id = $(this).val();
+      $.ajax({  
+          url:"/HARDWARE171/Venda/quantidade",  
+          method:"POST", 
+          data:{produto_id:produto_id},
+          success:function(data){
+            data = parseInt(data);
+            document.getElementById("quantidade").setAttribute("max", data);
+          },
+          error: function(error){
+            alert(error);
+          }
+      });
+    });
+
+  });
+  </script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
