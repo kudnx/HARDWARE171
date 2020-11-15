@@ -8,6 +8,7 @@ use \Psr\Http\Message\ResponseInterface;
 use Slim\App;
 use HARDWARE171\Controle\ControleAdmin;
 
+
 session_start();
 
 $config = ['settings' => [
@@ -17,25 +18,49 @@ $config = ['settings' => [
 $app = new App();
 
   $app->get('/', function (ServerRequestInterface $request, ResponseInterface $response, $args){
+    
     echo "
       <!DOCTYPE html>
+      
       <html lang='pt-br' dir='ltr'>
+      
         <head>
           <meta charset='utf-8'>
-          <title>Seja bem vindo!</title>
+          <title>Seja bem vindo!</title>      
         </head>
+        <style>
+        
+          h1,h2{
+            text-align:center;
+          }
+        
+        </style>
+
         <body>
-          <h1>Login</h1>
-          <form action='/HARDWARE171/Admin/login' method='post' enctype='multipart/form-data'>
-          <label for='nome'>Digite o email cadastrado</label>
-          <input type='email' name='email' id='email'><br>
-          <label for='nome'>Digite a sua senha</label>
-          <input type='senha' name='senha' id='senha' accept='senha'><br>
-          <button>Login</button>
-          </form>
+        <div class='conteudo'>
+          
+          
+            <form action='/HARDWARE171/Admin/login' method='post' enctype='multipart/form-data' class='login-form'>
+            <img src= 'Visao/templates/img/logo.svg'>	
+            <h2 class='title'>SEJA BEM VINDO!</h2>
+            <div class='form-group'>            
+              <input  placeholder='E-mail' class='form-control' type='email' name='email' id='email' required><br>
+            </div>
+
+            <div class='form-group'>            
+              <input placeholder='Senha'class='form-control' type='senha' name='senha' id='senha' accept='senha' required><br>          
+            </div>
+
+            <button class='btn btn-dark'>Login</button>
+
+            </form>
+        </div>
         </body>
       </html>
-    ";
+
+    " ;
+    include 'Visao/templates/IndexTemplate.php';
+   
   });
 
   $app->post('/Admin/{acao}', function (ServerRequestInterface $request, ResponseInterface $response, $args){
@@ -56,6 +81,8 @@ $app = new App();
         </script>
       ";
     }
+    
+  
   });
 
   $app->any('/{modulo}/{acao}[/{id}]', function (ServerRequestInterface $request, ResponseInterface $response, $args){

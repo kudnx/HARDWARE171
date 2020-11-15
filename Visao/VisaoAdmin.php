@@ -5,15 +5,20 @@ namespace HARDWARE171\Visao;
     public function __construct(){
     }
 
-    public function formulario(){
+    public function formulario(){   
       $titulo = 'Gerenciamento de Admins';
       $subtitulo = 'Cadastro de Admins';
-      $conteudo = '<form action="/HARDWARE171/Admin/inserir" method="post">
-      <label for="nome">Email do administrador</label>
-      <input type="email" name="email" id="email"><br>
-      <label for="nome">Senha</label>
-      <input type="password" name="senha" id="senha"><br>
-      <button>Cadastrar</button>
+      $conteudo = '<form class="form-group" action="/HARDWARE171/Admin/inserir" method="post">
+      <div class="form-group" style="width: 421px; margin: 0 auto;border: 1px solid #ced4da; padding: 24px;">
+      <h3 style = "margin-bottom:30px;color:#ced4da;">Novo Administrador</h3>         
+
+      <input class="form-control" type="email" name="email" id="email" placeholder="E-mail do administrador"><br>
+
+      <input class="form-control" type="password" name="senha" id="senha" placeholder="Senha do administrador"><br>
+    
+
+      <button style="margin-top: 1rem;width:100%;" class="btn btn-dark">Cadastrar</button>
+      </div>
       </form>';
       include './Visao/templates/template.php';
     }
@@ -27,7 +32,7 @@ namespace HARDWARE171\Visao;
         $parcial .= '<h3>' . $admins['email'] . '</h3>';
         $id = $admins['id'];
         $parcial .= '<p><br>';
-        $parcial .= '<a href="excluir/' . $id .'"><button>Excluir</button></a>';
+        $parcial .= '<a href="excluir/' . $id .'"><button class="btn btn-danger">Excluir</button></a>';
         $conteudo .= $parcial;
       }
       include './Visao/templates/template.php';

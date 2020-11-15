@@ -26,25 +26,27 @@ if (!$_SESSION['login'] == true){
       $titulo = 'Gerenciamento de Vendas';
       $subtitulo = 'Cadastro de Vendas';
       $parcial = '<form action="/HARDWARE171/Venda/confirmacao" method="post">';
+      $parcial .= ' <div class="form-group" style="width: 421px; margin: 0 auto;border: 1px solid #ced4da; padding: 24px;">
+                    <h3 style = "margin-bottom:30px;color:#ced4da;">Nova Venda!</h3>   ';
       $parcial .= '<p>Cliente</p>';
-      $parcial .= '<select name="cliente" id="cliente">';
+      $parcial .= '<select class="form-control" name="cliente" id="cliente">';
 
       foreach ($dadoscliente as $cliente) {
-        $parcial .= '<option id="titre" value=' .$cliente['id']. '>' .$cliente['nome']. '</option>';
+        $parcial .= '<option  id="titre" value=' .$cliente['id']. '>' .$cliente['nome']. '</option>';
       };
       $parcial .= '</select><br><br>';
       $parcial .= '<p>Produto</p>';
-      $parcial .= '<select name="produto" id="produto">';
+      $parcial .= '<select class="form-control" name="produto" id="produto">';
       $parcial .= '<option value="invalid">--</option>';
       foreach ($dadosProduto as $produto) {
-        $parcial .= '<option value=' .$produto['produto_id']. '>' .$produto['produto_nome']. '</option>';
+        $parcial .= '<option  value=' .$produto['produto_id']. '>' .$produto['produto_nome']. '</option>';
       };
       $parcial .= '</select><br><br>';
       $parcial .= '<p>Quantidade</p>';
-      $parcial .= '<input type="number" name="quantidade" id="quantidade" min="1" max="1" required</option>';
-      $parcial .= '<input type="text" name="admin_id" id="admin_id" value='.$dadosAdmin.' hidden>';
-      $parcial .= '<button>Confirmar</button>
-                </form>';
+      $parcial .= '<input class="form-control"  type="number" name="quantidade" id="quantidade" min="1" max="1" required</option><br>';
+      $parcial .= '<input class="form-control"  type="text" name="admin_id" id="admin_id" value='.$dadosAdmin.' hidden>';
+      $parcial .= '<button style="margin-top: 1rem;width:100%" class="btn btn-dark">Confirmar</button>
+                </div></form>';
       $conteudo = $parcial;
       include './Visao/templates/template.php';
     }
@@ -78,7 +80,7 @@ if (!$_SESSION['login'] == true){
       $parcial .= '<h4>' . $dadosProduto['descricao'] . '</h4>';
       $parcial .= '<h3>Foto do Produto </h3>';
       $parcial .= '<img src="'.$dir.$dadosProduto['foto'].'" alt='. $dadosProduto['produto_nome'] .'
-      width="700px" height="300px"/>';
+      width="300px" height="auto"/>';
       $id = $dadosProduto['produto_id'];
 
       $parcial .= '<br><br>';
@@ -92,7 +94,7 @@ if (!$_SESSION['login'] == true){
       $parcial .= '<input type="text" name="quantidade" id="quantidade" value="'.$quantidade.'" hidden>';
       $parcial .= '<input type="text" name="produto_id" id="produto_id" value='.$dadosProduto['produto_id'].' hidden>';
       $parcial .= '<input type="text" name="admin_id" id="admin_id" value='.$dadosAdmin[0]['id'].' hidden>';
-      $parcial .= '<button>Confirmar</button>
+      $parcial .= '<button class="btn btn-dark">Confirmar</button>
                 </form>';
 
       $conteudo = $parcial;
@@ -104,22 +106,22 @@ if (!$_SESSION['login'] == true){
       $titulo = 'Gerenciamento de Vendas';
       $subtitulo = 'Vendas Realizadas';
       $conteudo = '';
-      $parcial = '<table border="1" style="margin:auto">';
+      $parcial = '<table class="table" border="1" style="margin:auto">';
       $parcial .= '<thead>
                  <tr>
-                     <th>Data Venda</th>
-                     <th>Produto Nome</th>
-                     <th>Produto Preço</th>
-                     <th>Quantidade</th>
-                     <th>Email do administardor</th>
-                     <th>Nome do Cliente</th>
-                     <th>Email do Cliente</th>
-                     <th>Cidade do Cliente</th>
+                     <th scope="col">Data Venda</th>
+                     <th scope="col">Produto Nome</th>
+                     <th scope="col">Produto Preço</th>
+                     <th scope="col">Quantidade</th>
+                     <th scope="col">Email do administardor</th>
+                     <th scope="col">Nome do Cliente</th>
+                     <th scope="col">Email do Cliente</th>
+                     <th scope="col">Cidade do Cliente</th>
                  </tr>
                  </thead>';
       foreach ($lista as $venda) {
         $parcial .= '<tr>
-                        <td>'.$venda['data_venda'].'</td>
+                        <td >'.$venda['data_venda'].'</td>
                         <td>'.$venda['produto_nome'].'</td>
                         <td>'.$venda['produto_precoVenda'].'</td>
                         <td>'.$venda['quantidade'].'</td>
