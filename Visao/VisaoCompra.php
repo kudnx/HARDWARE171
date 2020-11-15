@@ -32,7 +32,7 @@ if (!$_SESSION['login'] == true){
       };
       $parcial .= '</select><br>';
       $parcial .= '<label>Quantidade</label><br>';
-      $parcial .= '<input class="form-control" type="number" id="quantidade" name="quantidade" min="1" max="1" required>';
+      $parcial .= '<input class="form-control" type="number" id="quantidade" name="quantidade" min="1" required>';
       $parcial .= '</select><br><br>';
       $parcial .= '<button style="width:100%;" class="btn btn-dark" onclick=validar()>Confirmar</button>
       </div></form>';
